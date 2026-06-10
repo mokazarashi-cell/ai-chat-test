@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIキャラメイク性格診断</title>
+    <meta name="description" content="15問で、あなたのAIキャラメイク癖を32タイプのロボットとして診断します。">
+    <link rel="canonical" href="https://mokazarashi-cell.github.io/ai-chat-making-style//">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mokazarashi-cell.github.io/ai-chat-making-style/">
+    <meta property="og:title" content="AIキャラメイク性格診断">
+    <meta property="og:description" content="15問で、あなたのAIキャラメイク癖を32タイプのロボットとして診断します。">
+    <meta property="og:image" content="https://mokazarashi-cell.github.io/ai-chat-making-style/images/top.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AIキャラメイク性格診断">
+    <meta name="twitter:description" content="15問で、あなたのAIキャラメイク癖を32タイプのロボットとして診断します。">
+    <meta name="twitter:image" content="https://mokazarashi-cell.github.io/ai-chat-making-style/images/top.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <div id="start-screen" class="screen active">
+            <img src="images/top.png" alt="トップバナー" class="top-banner">
+            
+            <div class="hero-copy">
+                <p><strong>あなたのAIキャラメイク性格を<br>解析します。</strong></p>
+                <p>AIキャラを作るとき、あなたは設計図から固めるタイプ？<br>それとも言葉の空気感から命を吹き込むタイプ？<br>15問であなたのキャラメイク癖を<br>32タイプのロボットとして診断します。</p>
+            </div>
+            
+            <details class="axis-explanation-details" open>
+                <summary>診断で見る5つの軸</summary>
+                <div class="axis-explanation-content">
+                    <p class="axis-lead">どちらが良い悪いではなく、キャラを作るときに自然と優先しやすい方向を見ています。</p>
+                    <div class="axis-item">
+                        <span class="axis-label">① 設計思想</span>
+                        <div class="axis-pair"><strong>C 構造派</strong><span>Markdown、ロアブック、条件分岐などキャラが迷わない骨組みを重視。</span></div>
+                        <div class="axis-pair"><strong>L 文体派</strong><span>セリフ、ト書き、間、語尾など読んだ瞬間の空気感を重視。</span></div>
+                    </div>
+                    <div class="axis-item">
+                        <span class="axis-label">② 対象</span>
+                        <div class="axis-pair"><strong>F 汎用型</strong><span>いろんなユーザー設定や話題を受け止める入口の広さを重視。</span></div>
+                        <div class="axis-pair"><strong>D 固定型</strong><span>特定の関係性だからこそ生まれる濃いドラマや距離感を重視。</span></div>
+                    </div>
+                    <div class="axis-item">
+                        <span class="axis-label">③ 展開</span>
+                        <div class="axis-pair"><strong>P シナリオ誘導型</strong><span>イベント、山場、フラグなど物語が進む仕掛けを入れたい。</span></div>
+                        <div class="axis-pair"><strong>S サンドボックス型</strong><span>ゴールを決めすぎず、終わらない日常会話や寄り道を楽しみたい。</span></div>
+                    </div>
+                    <div class="axis-item">
+                        <span class="axis-label">④ 制御</span>
+                        <div class="axis-pair"><strong>G 堅牢型</strong><span>メタ発言やキャラ崩れを防ぎ、いつ話してもその子らしさを守る。</span></div>
+                        <div class="axis-pair"><strong>O 寛容型</strong><span>多少のブレや予想外の返答もAIならではのライブ感として楽しむ。</span></div>
+                    </div>
+                    <div class="axis-item">
+                        <span class="axis-label">⑤ 原動力</span>
+                        <div class="axis-pair"><strong>M 自給自足型</strong><span>自分の理想、好き、性癖をできるだけ濃く形にしたい。</span></div>
+                        <div class="axis-pair"><strong>Y おもてなし型</strong><span>遊ぶ人の驚き、楽しさ、分かりやすさ、話しかけやすさを大切にする。</span></div>
+                    </div>
+                </div>
+            </details>
+
+            <button id="start-btn" class="cyber-btn">診断をはじめる // SYSTEM START</button>
+            <button id="start-resume-btn" class="cyber-btn resume-btn" style="display: none;">最新の結果に戻る // LATEST RESULT</button>
+            <button id="view-archive-btn" class="cyber-btn sub-btn">全32タイプ図鑑を見る // DATABASE</button>
+        </div>
+
+        <div id="question-screen" class="screen">
+            <div class="progress-bar-container"><div id="progress-bar"></div></div>
+            <p id="question-progress" class="cyber-progress"></p>
+            <h2 id="question-text">質問テキスト</h2>
+            <div id="choices-container"></div>
+        </div>
+
+        <div id="result-screen" class="screen">
+            <h2 class="cyber-text">ANALYSIS COMPLETE</h2>
+            
+            <div id="capture-area" class="capture-card">
+                <div class="capture-left">
+                    <div class="capture-image-panel">
+                        <img id="result-image" src="" alt="結果画像" class="result-image">
+                    </div>
+                </div>
+                <div class="capture-right">
+                    <div class="card-header">
+                        <h3 id="result-type" class="card-type">TYPE</h3>
+                        <h1 id="result-title" class="card-title">タイトル</h1>
+                        <p id="result-robot" class="card-robot">ロボット名</p>
+                    </div>
+                    <div class="detail-box log-box capture-log" aria-hidden="true">
+                        <p id="res-log" class="system-log-text"></p>
+                    </div>
+                    <div id="capture-ratings" class="capture-ratings"></div>
+                    <div class="card-watermark">AIキャラメイク性格診断</div>
+                </div>
+            </div>
+            <button id="download-btn" class="cyber-btn highlight-btn">SAVE IMAGE // 結果画像を保存する</button>
+            <button id="download-fulltext-btn" class="cyber-btn fulltext-save-btn">SAVE FULL TEXT IMAGE // 診断全文を画像で保存</button>
+            <p class="cyber-text download-note">※スマホアプリ内ブラウザ等で画像保存が動かない場合は、お手数ですが画面を直接スクリーンショットしてください。</p>
+
+            <div class="result-details-grid">
+                <div class="detail-box intro-box">
+                    <h4>【一言でいうと】</h4>
+                    <p id="res-summary"></p>
+                </div>
+                <div class="detail-box">
+                    <h4>【あなたのキャラメイク癖】</h4>
+                    <p id="res-stance"></p>
+                </div>
+                <div class="detail-box strength-box">
+                    <h4>【このタイプの強み】</h4>
+                    <p id="res-strength"></p>
+                </div>
+                <div class="detail-box alert-box">
+                    <h4>【やりがちな沼】</h4>
+                    <p id="res-pitfall"></p>
+                </div>
+                <div class="detail-box tip-box">
+                    <h4>【もっと楽しく作るコツ】</h4>
+                    <p id="res-tip"></p>
+                </div>
+                <div class="detail-box compatibility-box">
+                    <h4>【相性データ】※タップで図鑑を開く</h4>
+                    <ul>
+                        <li><span class="tag best">共鳴する魂</span> <div id="comp-best" class="chip-container"></div></li>
+                        <li><span class="tag comp">相互補完</span> <div id="comp-comp" class="chip-container"></div></li>
+                        <li><span class="tag stim">刺激的な異文化</span> <div id="comp-stim" class="chip-container"></div></li>
+                        <li><span class="tag conf">すれ違い注意</span> <div id="comp-conf" class="chip-container"></div></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <a id="share-x-btn" class="cyber-btn share-btn" target="_blank" rel="noopener noreferrer">𝕏 でリンクをシェア</a>
+            <a id="share-line-btn" class="cyber-btn line-btn" target="_blank" rel="noopener noreferrer">LINE でシェア</a>
+            <button id="copy-url-btn" class="cyber-btn copy-btn">URLをコピーする</button>
+
+            <div class="copy-text-section">
+                <button id="copy-fulltext-btn" class="cyber-btn copy-full-btn">COPY ALL TEXT // 診断テキスト全文をコピー</button>
+                <details class="copy-text-details" id="copy-text-details">
+                    <summary class="copy-text-summary">テキストを表示する // SHOW TEXT</summary>
+                    <textarea id="result-fulltext" class="result-fulltext-area" readonly placeholder="診断結果がここに表示されます"></textarea>
+                </details>
+            </div>
+            <button id="restart-btn" class="cyber-btn sub-btn">REBOOT // 最初からやり直す</button>
+            <button id="result-to-archive-btn" class="cyber-btn sub-btn">DATABASE // 図鑑を見る</button>
+        </div>
+
+        <div id="archive-screen" class="screen">
+            <h2 class="cyber-title">DATABASE // 全32タイプ図鑑</h2>
+            <div class="tab-container">
+                <button id="tab-c" class="tab-btn active">C群：構造・システム派</button>
+                <button id="tab-l" class="tab-btn">L群：文体・エディトリアル派</button>
+            </div>
+            <div id="archive-grid" class="archive-grid"></div>
+            
+            <button id="archive-resume-btn" class="cyber-btn resume-btn" style="display: none;">LATEST RESULT // 最新の解析結果に戻る</button>
+            <button id="back-home-btn" class="cyber-btn sub-btn">RETURN // トップへ戻る</button>
+        </div>
+
+        <div id="modal-overlay" class="modal-overlay">
+            <div class="modal-content">
+                <button id="modal-close" class="modal-close-btn">×</button>
+                <h3 id="modal-type" class="cyber-text">TYPE</h3>
+                <h2 id="modal-title" class="cyber-title">タイトル</h2>
+                <p id="modal-bot" class="robot-name">ロボット名</p>
+                <img id="modal-image" src="" alt="ロボット画像" class="modal-image">
+                
+                <div class="modal-details log-box" style="margin-bottom: 15px;">
+                    <h4>【脳内思考ログ】</h4>
+                    <p id="modal-log" class="system-log-text"></p>
+                </div>
+                <div class="modal-details">
+                    <h4>【一言でいうと】</h4>
+                    <p id="modal-summary"></p>
+                </div>
+                <div class="modal-details">
+                    <h4>【あなたのキャラメイク癖】</h4>
+                    <p id="modal-stance"></p>
+                </div>
+                <div class="modal-details">
+                    <h4>【このタイプの強み】</h4>
+                    <p id="modal-strength"></p>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="cyber-footer">
+            <div class="footer-notes">
+                <p class="footer-note"><strong>PRIVACY NOTE</strong>本サイトは個人情報の収集やサーバーへのデータ送信を一切行いません。すべての解析ログは端末内で安全に処理されます。</p>
+                <p class="footer-note"><strong>DISCLAIMER</strong>本診断はジョーク・エンタメコンテンツです。診断結果によって生じた損害等について制作者は一切の責任を負いません。</p>
+                <p class="footer-note"><strong>ABOUT AI CONTENT</strong>本サービスのロボット擬人化イラストおよび診断結果のビジュアルには、AI生成ツールを使用しています。生成イラスト・診断テキストのSNS等への個人シェアは歓迎します。ただし改変・商用利用はご遠慮ください。</p>
+                <p class="footer-note"><strong>CONTACT</strong>不具合報告はMokazarashiの <a href="https://x.com/3ntCHok0" target="_blank" rel="noopener noreferrer">𝕏 @3ntCHok0</a> までお願いします。</p>
+            </div>
+            <div class="footer-meta">
+                <span class="footer-item">SYSTEM_VERSION: 1.3.0</span>
+                <span class="footer-item">© 2026 Mokazarashi All Rights Reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+    <button id="back-to-top" class="back-to-top-btn" type="button" aria-label="ページトップへ" title="ページトップへ">↑</button>
+    <script src="script.js"></script>
+</body>
+</html>
