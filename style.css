@@ -1058,17 +1058,21 @@ body.modal-lock {
     background: rgba(0, 243, 255, 0.1);
     border: 2px solid var(--main-blue);
     box-shadow: 0 0 15px var(--glow-color);
-    margin-bottom: 30px;
+    margin-bottom: 12px;
 }
-.highlight-btn:hover {
-    background: var(--main-blue);
-    color: #050a15;
+
+.fulltext-save-btn {
+    background: rgba(183, 255, 60, 0.07);
+    border-color: #b7ff3c;
+    color: #b7ff3c;
+    margin-bottom: 10px;
+    font-size: 13px;
 }
 
 .download-note {
     font-size: 11px;
     color: #ffaa00;
-    margin: 10px 0 24px;
+    margin: 8px 0 24px;
     line-height: 1.6;
     display: block;
     clear: both;
@@ -1434,4 +1438,3 @@ body.modal-lock {
         border-radius: 10px;
         padding: 6px;
     }
-}
