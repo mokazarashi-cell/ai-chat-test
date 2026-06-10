@@ -1068,8 +1068,10 @@ body.modal-lock {
 .download-note {
     font-size: 11px;
     color: #ffaa00;
-    margin: -18px 0 24px;
+    margin: 10px 0 24px;
     line-height: 1.6;
+    display: block;
+    clear: both;
 }
 
 .back-to-top-btn {
